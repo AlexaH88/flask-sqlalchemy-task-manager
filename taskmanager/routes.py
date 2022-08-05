@@ -50,7 +50,7 @@ def add_task():
         task = Task(
             task_name=request.form.get("task_name"),
             task_description=request.form.get("task_description"),
-            is_urgent=bool(True if request.form.get("ir_urgent") else False),
+            is_urgent=bool(True if request.form.get("is_urgent") else False),
             due_date=request.form.get("due_date"),
             category_id=request.form.get("category_id")
         )
@@ -74,10 +74,9 @@ def edit_task(task_id):
     return render_template("edit_task.html", task=task, categories=categories)
 
 
-# delete task option created by me
-# @app.route("/delete_task/<int:task_id>")
-# def delete_task(task_id):
-#     task = Task.query.get_or_404(task_id)
-#     db.session.delete(task)
-#     db.session.commit()
-#     return redirect(url_for("home"))
+@app.route("/delete_task/<int:task_id>")
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for("home"))
